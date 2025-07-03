@@ -1,0 +1,94 @@
+public class Candidato {
+    private int numero;
+    private String nome;
+    private int votos;
+
+    public Candidato(int numero, String nome) {
+        this.numero = numero;
+        this.nome = nome;
+        this.votos = 0;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public int getVotos() {
+        return votos;
+    }
+
+    public void incrementarVotos() {
+        votos++;
+    }
+}
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ProgramaTesteCandidato {
+    public static void main(String[] args) {
+        Candidato candidato = new Candidato(1, "João");
+        System.out.println("Número do Candidato: " + candidato.getNumero());
+        System.out.println("Nome do Candidato: " + candidato.getNome());
+        System.out.println("Número de Votos do Candidato: " + candidato.getVotos());
+
+        candidato.incrementarVotos();
+        System.out.println("Após um voto:");
+        System.out.println("Número de Votos do Candidato: " + candidato.getVotos());
+
+        System.out.println("Número: " + candidato.getNumero());
+        System.out.println("Nome: " + candidato.getNome());
+        System.out.println("Votos: " + candidato.getVotos());
+    }
+}
+
+public class ProgramaCadastroCandidatos {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Quantos candidatos deseja cadastrar? ");
+        int numCandidatos = scanner.nextInt();
+        scanner.nextLine(); 
+        ArrayList<Candidato> candidatos = new ArrayList<>();
+
+        for (int i = 1; i <= numCandidatos; i++) {
+            System.out.print("Número do Candidato " + i + ": ");
+            int numero = scanner.nextInt();
+            scanner.nextLine(); 
+
+            System.out.print("Nome do Candidato " + i + ": ");
+            String nome = scanner.nextLine();
+
+            Candidato candidato = new Candidato(numero, nome);
+            candidatos.add(candidato);
+        }
+
+        System.out.println("Digite os votos para os candidatos (por número de candidato):");
+
+        while (true) {
+            System.out.print("Número do Candidato (ou -1 para encerrar): ");
+            int numero = scanner.nextInt();
+
+            if (numero == -1) {
+                break;
+            }
+
+            for (Candidato candidato : candidatos) {
+                if (candidato.getNumero() == numero) {
+                    candidato.incrementarVotos();
+                    break;
+                }
+            }
+        }
+
+        System.out.println("Resultado da Eleição:");
+        for (Candidato candidato : candidatos) {
+            System.out.println("Número: " + candidato.getNumero());
+            System.out.println("Nome: " + candidato.getNome());
+            System.out.println("Votos: " + candidato.getVotos());
+        }
+    }
+}
